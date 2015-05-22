@@ -14,7 +14,7 @@
          height = 0;
      }
      /* Constructor */
-     public AVLNode(int n)
+     public AVLNode(Pos n)
      {
          left = null;
          right = null;
@@ -44,7 +44,7 @@
          root = null;
      }
      /* Function to insert data */
-     public void insert(int data)
+     public void insert(Pos data)
      {
          root = insert(data, root);
      }
@@ -59,24 +59,24 @@
          return lhs > rhs ? lhs : rhs;
      }
      /* Function to insert data recursively */
-     private AVLNode insert(int x, AVLNode t)
+     private AVLNode insert(Pos x, AVLNode t)
      {
          if (t == null)
              t = new AVLNode(x);
-         else if (x < t.data)
+         else if (x.compareTo(t.data) < 0)
          {
              t.left = insert( x, t.left );
              if( height( t.left ) - height( t.right ) == 2 )
-                 if( x < t.left.data )
+                 if( x.compareTo(t.left.data) < 0)
                      t = rotateWithLeftChild( t );
                  else
                      t = doubleWithLeftChild( t );
          }
-         else if( x > t.data )
+         else if( x.compareTo(t.data) > 0 )
          {
              t.right = insert( x, t.right );
              if( height( t.right ) - height( t.left ) == 2 )
-                 if( x > t.right.data)
+                 if( x.compareTo(t.right.data) > 0)
                      t = rotateWithRightChild( t );
                  else
                      t = doubleWithRightChild( t );
@@ -141,19 +141,19 @@
          }
      }
      /* Functions to search for an element */
-     public boolean search(int val)
+     public boolean search(Pos val)
      {
          return search(root, val);
      }
-     private boolean search(AVLNode r, int val)
+     private boolean search(AVLNode r, Pos val)
      {
          boolean found = false;
          while ((r != null) && !found)
          {
-             int rval = r.data;
-             if (val < rval)
+             Pos rval = r.data;
+             if (val.compareTo(rval) < 0)
                  r = r.left;
-             else if (val > rval)
+             else if (val.compareTo(rval) > 0)
                  r = r.right;
              else
              {
