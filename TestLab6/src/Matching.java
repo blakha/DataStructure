@@ -23,22 +23,36 @@ public class Matching
 			}
 		}
 	}
+	
+	private static AVLTree[] hash_table = new AVLTree[100]; 
 
 	private static void command(String input) throws FileNotFoundException, IOException
 	{
 		if(input.charAt(0) == '?'){
+			String[] string_arg = input.split(" ");
+			String pattern = string_arg[1];
+			int sum = 0;
+			
+			for(int i = 0; i < 6; i++){
+				sum += pattern.charAt(i);
+			}
+			
+			int idx = sum % 100;
+			hash_table[idx].inorder();
 		
 		}else if(input.charAt(0) == '@')
 		{
+			String[] string_arg = input.split(" ");
+			int idx = Integer.parseInt(string_arg[1]);
+			hash_table[idx].inorder();
 			
 		}else if(input.charAt(0) == '<')
 		{
-			String[] string_arg = input.split(input);
+			String[] string_arg = input.split(" ");
 			String file = string_arg[1];
 			// ÀÌ°Å ¾îÂ¼³Ä
 			String[] S = new String[10];
 			int i = 0;
-			String pattern = string_arg[2];
 			
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			    String line;
@@ -47,10 +61,9 @@ public class Matching
 			    	i++;
 			    }
 			}
+			
 			int line_num = i;
-			
-			AVLTree[] hash_table = new AVLTree[100];
-			
+						
 			int hash_idx = 0;
 			int sum = 0;
 			String sub_string = null;
@@ -58,36 +71,16 @@ public class Matching
 			for(int j = 0; j < line_num ; j++){
 				for(int l = 0 ; l < S[j].length() - 5 ; j++)
 				{
+					sum = 0;
 					sub_string = S[j].substring(l, l+5);
 					for(int k = 0; k < sub_string.length() ; k++){
-						sum += (int) S[j].charAt(j+k);
+						sum += S[j].charAt(l+k);
 					}
 					hash_idx = sum % 100;
 					hash_table[hash_idx].insert(new Pos(i,j));					
 				}
 			}
-			
-			int m = pattern.length();
-			int n = 0;
-			int offset = 0;
-			
-			for(int k = 0 ; k < S.length ; k++){
-				n = S[k].length();
-			for(i = 0 ; i < n- m; i++){
-				int j;
-				for(j = 0; i <m; j++){
-					if(file.charAt(i+j) != pattern.charAt(j))
-						break;
-				}
-				if( j == m ) offset = i; 
 			}
-			System.out.println(k + " "+ i);
-			}
-			
-			
-			
-			
-				}
 			}
 		
 		}
