@@ -2,7 +2,7 @@
  class AVLNode
  {    
      AVLNode left, right;
-     int data;
+     Pos data;
      int height;
  
      /* Constructor */
@@ -10,7 +10,7 @@
      {
          left = null;
          right = null;
-         data = 0;
+         data = null;
          height = 0;
      }
      /* Constructor */
